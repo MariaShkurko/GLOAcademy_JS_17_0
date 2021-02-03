@@ -1,4 +1,18 @@
-'use strict'
+'use strict';
+
+let money = Number(prompt('Ваш месячный доход?', 0)),
+    addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
+    deposit = confirm('Есть ли у вас депозит в банке?'),
+    income = 'фриланс',
+    mission = 2000000,
+    period = 36,
+    expenses1 = prompt('Введите обязательную статью расходов?'),
+    amount1 = Number(prompt('Во сколько это обойдется?')),
+    expenses2 = prompt('Введите обязательную статью расходов?'),
+    amount2 = Number(prompt('Во сколько это обойдется?')),
+    accumulatedMonth,
+    budgetMonth,
+    budgetDay;
 
 function showTypeOf (data) {
   console.log(data, typeof data);
@@ -28,28 +42,8 @@ function getStatusIncome(budgetDay) {
   }
 }
 
-let money,
-    income = 'фриланс',
-    addExpenses = '',
-    deposit,
-    depositStr,
-    mission = 2000000,
-    period = 36,
-    budgetMonth;
-
-money = Number(prompt('Ваш месячный доход?', 0));
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-depositStr = prompt('Есть ли у вас депозит в банке?', 'да');
-
-deposit = (depositStr !== null) && ((depositStr.toLowerCase() === 'да') || (depositStr.toLowerCase() === 'yes')) ? true : false;
-
-let expenses1 = prompt('Введите обязательную статью расходов?'),
-    amount1 = Number(prompt('Во сколько это обойдется?')),
-    expenses2 = prompt('Введите обязательную статью расходов?'),
-    amount2 = Number(prompt('Во сколько это обойдется?'));
-
-let accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount1, amount2)),
-    budgetDay = accumulatedMonth / 30;
+accumulatedMonth = getAccumulatedMonth(money, getExpensesMonth(amount1, amount2));
+budgetDay = accumulatedMonth / 30;
 
 showTypeOf(money);
 showTypeOf(income);
