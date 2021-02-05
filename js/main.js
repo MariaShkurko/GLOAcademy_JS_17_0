@@ -21,7 +21,7 @@ let money = start(),
         expenses: {},
         addExpenses: [],
 
-        budget: 0,
+        budget: money,
         budgetDay: 0,
         budgetMonth: 0,
         expensesMonth: 0,
@@ -78,8 +78,6 @@ let money = start(),
             }
         }
     };
-
-appData.budget = money;
 
 appData.asking();
 appData.getExpensesMonth();
