@@ -154,3 +154,28 @@ console.log('Наша программа включает в себя данны
 for (let prop in appData) {
     console.log(prop + ': ', appData[prop]);
 }
+
+const buttonCalculate = document.getElementById('start');
+const buttonPlusFirst = document.getElementsByTagName('button')[0];
+const buttonPlusSecond = document.getElementsByTagName('button')[1];
+const depositСheck = document.querySelector('#deposit-check');
+const inputAddAll = document.querySelectorAll('.additional_income-item');
+
+const inputBudgetMonth = document.getElementsByClassName('budget_month-value');
+const inputBudgetDay = document.getElementsByClassName('budget_day-value');
+const inputExpensesMonth = document.getElementsByClassName('expenses_month-value');
+const inputAddIncome = document.getElementsByClassName('additional_income-value');
+const inputAddExpenses = document.getElementsByClassName('additional_expenses-value');
+const inputIncomePeriod = document.getElementsByClassName('income_period-value');
+const inputTargetMonth = document.getElementsByClassName('target_month-value');
+
+const inputSalaryAmount = document.querySelector('.salary-amount');
+const inputIncomeTitle = document.querySelector('.income-title');
+const inputIncomeAmount = document.querySelector('.income-amount');
+const inputExpensesTitle = document.querySelector('.expenses-title');
+const inputExpensesAmount = document.querySelector('.expenses-amount');
+const inputAdditionalExpensesItem = document.querySelector('.additional_expenses-item');
+const inputDepositAmount = document.querySelector('.deposit-amount');
+const inputDepositPercent = document.querySelector('.deposit-percent');
+const inputTargetAmount = document.querySelector('.target-amount');
+const inputPeriodSelect = document.querySelector('.period-select');
