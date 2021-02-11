@@ -199,16 +199,11 @@ let appData = {
     }
 };
 
-if (salaryAmount.value.trim() === '') {
-    buttonStart.removeEventListener('click', appData.start);
-} else {
-    buttonStart.addEventListener('click', appData.start);
-}
+// тут должна быть обработка кнопки (не нажимать, пока не введут месячный доход)
+buttonStart.addEventListener('click', appData.start);
 
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', () => {
     periodValue.textContent = periodSelect.value;
 });
-
-
