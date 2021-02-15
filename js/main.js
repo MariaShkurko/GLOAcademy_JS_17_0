@@ -6,11 +6,11 @@ const isNumber = (num) => {
 
 const isString = (str) => {
     return (str.length !== 0) && !isNumber(str);
-}
+};
 
 const formattingString = (str) => {
     return str[0].toUpperCase() + str.slice(1);
-}
+};
 
 const buttonStart = document.getElementById('start');
 const buttonPlus = document.querySelectorAll('.btn_plus');
@@ -81,6 +81,7 @@ let appData = {
 
         periodSelect.addEventListener('input', () => {
             incomePeriodValue.value = appData.calcSavedMoney();
+            targetMonthValue.value = appData.getTargetMonth();
         });
     },
 
@@ -200,7 +201,15 @@ let appData = {
 };
 
 // тут должна быть обработка кнопки (не нажимать, пока не введут месячный доход)
-buttonStart.addEventListener('click', appData.start);
+
+buttonStart.addEventListener('click', () => {
+    if (salaryAmount.value !== '' && isNumber(salaryAmount.value)) {
+        appData.start();
+    } else {
+        salaryAmount.value = '';
+        alert('Введите число в поле "Месячный доход"');
+    }
+});
 
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
