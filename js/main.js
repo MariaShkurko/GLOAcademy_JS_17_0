@@ -200,8 +200,6 @@ let appData = {
     }
 };
 
-// тут должна быть обработка кнопки (не нажимать, пока не введут месячный доход)
-
 buttonStart.addEventListener('click', () => {
     if (salaryAmount.value !== '' && isNumber(salaryAmount.value)) {
         appData.start();
