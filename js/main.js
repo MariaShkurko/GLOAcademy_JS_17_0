@@ -110,6 +110,21 @@ AppData.prototype.reset = function () {
     });
     periodSelect.value = 1;
     periodValue.textContent = 1;
+
+    for (let i = 1; i < expensesItems.length; i++) {
+        if (expensesItems[i] !== undefined) {
+            expensesItems[i].remove();
+        }
+    }
+
+    for (let i = 1; i < incomeItems.length; i++) {
+        if (incomeItems[i] !== undefined) {
+            incomeItems[i].remove();
+        }
+    }
+
+    expensesPlus.style.display = 'inline-block';
+    incomePlus.style.display = 'inline-block';
 }
 
 AppData.prototype.showResult = function () {
