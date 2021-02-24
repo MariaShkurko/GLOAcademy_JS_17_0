@@ -20,14 +20,14 @@ DomElement.prototype.createElement = function () {
         document.body.append(newElement);
     } else if (this.selector[0] === '#') {
         const id = this.selector.substring(1);
-        const newElement = document.createElement('div');
+        const newElement = document.createElement('p');
 
         newElement.id = id;
         newElement.style.cssText = `height: ${this.height};
             width: ${this.width};
             background: ${this.bg};
             font-size: ${this.fontSize};`;
-        newElement.innerHTML = `Новый div с id ${id}`;
+        newElement.innerHTML = `Новый параграф с id ${id}`;
 
         document.body.append(newElement);
     }
@@ -35,7 +35,7 @@ DomElement.prototype.createElement = function () {
 
 const div1 = new DomElement('.big', '500px', '700px', '#c2c2f3', '27px');
 const div2 = new DomElement('.small', '15px', '150px', '#aabb10', '10px');
-const div3 = new DomElement('.medium', '200px', '400px', '#12ab1c', '18px');
+const div3 = new DomElement('#medium', '200px', '400px', '#12ab1c', '18px');
 div1.createElement();
 div2.createElement();
 div3.createElement();
