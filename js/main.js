@@ -224,7 +224,7 @@ AppData.prototype.getTargetMonth = function () {
     }
 } */
 
-AppData.prototype.getInfoDeposit = function () {
+/* AppData.prototype.getInfoDeposit = function () {
     if (this.deposit) {
         do {
             this.percentDeposit = prompt('Какой годовой процент?', 10);
@@ -234,7 +234,7 @@ AppData.prototype.getInfoDeposit = function () {
             this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
         } while (!isNumber(this.moneyDeposit));
     }
-}
+} */
 
 AppData.prototype.calcSavedMoney = function () {
     this.period = parseFloat(periodSelect.value);
