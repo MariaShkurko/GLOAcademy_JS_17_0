@@ -1,32 +1,29 @@
 "use strict";
 
-const buttonStart = document.getElementById('start');
-const buttonCansel = document.getElementById('cancel');
-const buttonPlus = document.querySelectorAll('.btn_plus');
-const incomePlus = buttonPlus[0];
-const expensesPlus = buttonPlus[1];
+const buttonStart = document.getElementById('start'),
+    buttonCansel = document.getElementById('cancel'),
+    buttonPlus = document.querySelectorAll('.btn_plus'),
+    incomePlus = buttonPlus[0],
+    expensesPlus = buttonPlus[1],
+    salaryAmount = document.querySelector('.salary-amount'),
+    additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
+    additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+    depositСheck = document.querySelector('#deposit-check'),
+    targetAmount = document.querySelector('.target-amount'),
+    periodSelect = document.querySelector('.period-select'),
+    periodValue = document.querySelector('.period-amount'),
+    budgetMonthValue = document.querySelector('.budget_month-value'),
+    budgetDayValue = document.querySelector('.budget_day-value'),
+    expensesMonthValue = document.querySelector('.expenses_month-value'),
+    additionalIncomeValue = document.querySelector('.additional_income-value'),
+    additionalExpensesValue = document.querySelector('.additional_expenses-value'),
+    incomePeriodValue = document.querySelector('.income_period-value'),
+    targetMonthValue = document.querySelector('.target_month-value'),
+    depositAmount = document.querySelector('.deposit-amount'),
+    depositPercent = document.querySelector('.deposit-percent');
 
-const salaryAmount = document.querySelector('.salary-amount');
-const additionalIncomeItem = document.querySelectorAll('.additional_income-item');
-const additionalExpensesItem = document.querySelector('.additional_expenses-item');
-const depositСheck = document.querySelector('#deposit-check');
-const targetAmount = document.querySelector('.target-amount');
-const periodSelect = document.querySelector('.period-select');
-const periodValue = document.querySelector('.period-amount');
-
-const budgetMonthValue = document.querySelector('.budget_month-value');
-const budgetDayValue = document.querySelector('.budget_day-value');
-const expensesMonthValue = document.querySelector('.expenses_month-value');
-const additionalIncomeValue = document.querySelector('.additional_income-value');
-const additionalExpensesValue = document.querySelector('.additional_expenses-value');
-const incomePeriodValue = document.querySelector('.income_period-value');
-const targetMonthValue = document.querySelector('.target_month-value');
-
-const depositAmount = document.querySelector('.deposit-amount');
-const depositPercent = document.querySelector('.deposit-percent');
-
-let incomeItems = document.querySelectorAll('.income-items');
-let expensesItems = document.querySelectorAll('.expenses-items');
+let incomeItems = document.querySelectorAll('.income-items'),
+    expensesItems = document.querySelectorAll('.expenses-items');
 
 const isNumber = (num) => {
     return !isNaN(parseFloat(num)) && isFinite(num);
