@@ -56,37 +56,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu');
 
-        let count = -100,
-            animationInterval;
-
-        // Animation menu
-        const animationMenu = () => {
-            animationInterval = requestAnimationFrame(animationMenu);
-            count += 5;
-            menu.style.transform = `translateX(${count}%)`;
-            if (menu.style.transform === 'translateX(100%)') cancelAnimationFrame(animationInterval);
-        };
-
         const handlerMenu = () => {
-            if (screen.width < 768) {
-                menu.classList.toggle('active-menu');
-            } else {
-                if (!menu.style.transform || menu.style.transform === 'translateX(-100%)') {
-                    count = -100;
-                    animationMenu();
-                } else {
-                    menu.style.transform = '';
-                }
-            }
+            menu.classList.toggle('active-menu');
         };
 
         btnMenu.addEventListener('click', handlerMenu);
         menu.addEventListener('click', event => {
             const target = event.target;
-
-            if (target.classList.contains('close-btn') || target.nodeName === 'A') {
-                handlerMenu();
-            }
+            if (target.classList.contains('close-btn') || target.nodeName === 'A') handlerMenu();
         });
     };
 
@@ -97,15 +74,38 @@ window.addEventListener('DOMContentLoaded', () => {
         const popup = document.querySelector('.popup'),
             popupBtn = document.querySelectorAll('.popup-btn');
 
-        popupBtn.forEach(item => item.addEventListener('click', () => popup.style.display = 'block'));
+        let count = 0,
+            animationInterval;
+
+        const animationPopUp = () => {
+            animationInterval = requestAnimationFrame(animationPopUp);
+            count += 0.05;
+            popup.style.opacity = count;
+            if (popup.style.opacity === "1") {
+                cancelAnimationFrame(animationInterval);
+                count = 0;
+            }
+        };
+
+        popupBtn.forEach(item => item.addEventListener('click', () => {
+            if (screen.width < 768) {
+                popup.style.display = 'block';
+            } else {
+                popup.style.opacity = 0;
+                popup.style.display = 'block';
+                animationPopUp();
+            }
+        }));
         popup.addEventListener('click', event => {
             let target = event.target;
 
             if (target.classList.contains('popup-close')) {
+                popup.style.opacity = '';
                 popup.style.display = '';
             } else {
                 target = target.closest('.popup-content');
                 if (!target) {
+                    popup.style.opacity = '';
                     popup.style.display = '';
                 }
             }
