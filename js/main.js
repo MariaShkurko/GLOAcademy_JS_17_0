@@ -58,30 +58,8 @@ window.addEventListener('DOMContentLoaded', () => {
             closeBtn = menu.querySelector('.close-btn'),
             menuItems = menu.querySelectorAll('ul>li');
 
-        let count = -100,
-            animationInterval;
-
-        // Animation menu
-        const animationMenu = () => {
-            animationInterval = requestAnimationFrame(animationMenu);
-            count += 5;
-            menu.style.transform = `translateX(${count}%)`;
-            if (menu.style.transform === 'translateX(100%)') cancelAnimationFrame(animationInterval);
-        };
-
         const handlerMenu = () => {
-            if (screen.width < 768) {
-                menu.classList.toggle('active-menu');
-            } else {
-                if (!menu.style.transform || menu.style.transform === 'translateX(-100%)') {
-                    console.log('start animation');
-                    count = -100;
-                    animationMenu();
-                } else {
-                    console.log('start close');
-                    menu.style.transform = '';
-                }
-            }
+            menu.classList.toggle('active-menu');
         };
 
         btnMenu.addEventListener('click', handlerMenu);
@@ -97,8 +75,29 @@ window.addEventListener('DOMContentLoaded', () => {
             popupClose = popup.querySelector('.popup-close'),
             popupBtn = document.querySelectorAll('.popup-btn');
 
-        popupBtn.forEach(item => item.addEventListener('click', () => popup.style.display = 'block'));
-        popupClose.addEventListener('click', () => popup.style.display = '');
+        let count = 0,
+            animationInterval;
+
+        const animationPopUp = () => {
+            animationInterval = requestAnimationFrame(animationPopUp);
+            count += 0.05;
+            popup.style.opacity = count;
+            if (popup.style.opacity === "1") {
+                cancelAnimationFrame(animationInterval);
+                count = 0;
+            }
+            console.log(count);
+        };
+
+        popupBtn.forEach(item => item.addEventListener('click', () => {
+            popup.style.opacity = 0;
+            popup.style.display = 'block';
+            animationPopUp();
+        }));
+        popupClose.addEventListener('click', () => {
+            popup.style.opacity = '';
+            popup.style.display = '';
+        });
     };
 
     togglePopUp();
