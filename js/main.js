@@ -90,9 +90,13 @@ window.addEventListener('DOMContentLoaded', () => {
         };
 
         popupBtn.forEach(item => item.addEventListener('click', () => {
-            popup.style.opacity = 0;
-            popup.style.display = 'block';
-            animationPopUp();
+            if (screen.width < 768) {
+                popup.style.display = 'block';
+            } else {
+                popup.style.opacity = 0;
+                popup.style.display = 'block';
+                animationPopUp();
+            }
         }));
         popupClose.addEventListener('click', () => {
             popup.style.opacity = '';
