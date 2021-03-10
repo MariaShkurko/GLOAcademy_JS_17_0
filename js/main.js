@@ -315,7 +315,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 .replace(/-+/g, '-')
                 .replace(/\(+/g, '(')
                 .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/8(([()-]*\d){10}|\d{10,11})/) === -1) {
+            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
                 alert('Некорректный номер телефона');
             }
         });
@@ -357,7 +357,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 .replace(/-+/g, '-')
                 .replace(/\(+/g, '(')
                 .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/8(([()-]*\d){10}|\d{10,11})/) === -1) {
+            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
                 alert('Некорректный номер телефона');
             }
         });
@@ -407,7 +407,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 .replace(/-+/g, '-')
                 .replace(/\(+/g, '(')
                 .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/8(([()-]*\d){10}|\d{10,11})/) === -1) {
+            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
                 alert('Некорректный номер телефона');
             }
         });
