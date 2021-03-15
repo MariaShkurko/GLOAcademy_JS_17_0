@@ -406,8 +406,18 @@ window.addEventListener('DOMContentLoaded', () => {
     // send-ajax-form
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так...',
-            loadMessage = 'Загрузка...',
-            successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+            successMessage = 'Спасибо! Мы скоро с вами свяжемся!',
+            loadSpin = document.createElement('div'),
+            loadSpinChild1 = document.createElement('div'),
+            loadSpinChild2 = document.createElement('div');
+
+        loadSpin.className = 'sk-wandering-cubes';
+        loadSpinChild1.className = 'sk-cube';
+        loadSpinChild2.className = 'sk-cube';
+        loadSpinChild1.classList.add('sk-cube-1');
+        loadSpinChild2.classList.add('sk-cube-2');
+        loadSpin.insertAdjacentElement('afterbegin', loadSpinChild2);
+        loadSpin.insertAdjacentElement('afterbegin', loadSpinChild1);
 
         const form1 = document.getElementById('form1'),
             form2 = document.getElementById('form2'),
@@ -439,7 +449,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const prepareData = (event, form) => {
             event.preventDefault();
             form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            statusMessage.insertAdjacentElement('afterbegin', loadSpin);
 
             const body = {},
                 formData = new FormData(form);
