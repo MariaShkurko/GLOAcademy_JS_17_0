@@ -270,12 +270,17 @@ window.addEventListener('DOMContentLoaded', () => {
             popUpFormPhone = document.getElementById('form3-phone');
 
         const validatePhone = event => {
-            const target = event.target;
+            const target = event.target,
+                btn = document.getElementById(target.id.split('-')[0]).querySelector('button');
             target.value = target.value.replace(/^[^0-9+]*/g, '')
                 .replace(/\D*$/g, '')
                 .replace(/^\++/g, '+');
             if (target.value && target.value.search(/^(\+7|8)\d{10}$/) === -1) {
-                alert('Некорректный номер телефона');
+                target.style.border = '2px solid red';
+                btn.disabled = true;
+            } else {
+                target.style.border = '';
+                btn.disabled = false;
             }
         };
         const validateName = event => {
@@ -287,12 +292,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 .join(' ');
         };
         const validateEmail = event => {
-            const target = event.target;
+            const target = event.target,
+                btn = document.getElementById(target.id.split('-')[0]).querySelector('button');
             target.value = target.value.toLowerCase()
                 .replace(/^-*/g, '')
                 .replace(/\W*$/g, '');
             if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
-                alert('Некорректный email');
+                target.style.border = '2px solid red';
+                btn.disabled = true;
+            } else {
+                target.style.border = '';
+                btn.disabled = false;
             }
         };
 
@@ -345,16 +355,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
         popUpForm.addEventListener('input', event => {
             const target = event.target;
-            if (target.matches('#form1-name')) {
+            if (target.matches('#form3-name')) {
                 target.value = target.value.replace(/[^а-яё ]/gi, '');
-            } else if (target.matches('#form1-email')) {
+            } else if (target.matches('#form3-email')) {
                 target.value = target.value.replace(/[^a-z@_!~'-.*]/gi, '');
-            } else if (target.matches('#form1-phone')) {
+            } else if (target.matches('#form3-phone')) {
                 target.value = target.value.replace(/[^0-9+]/gi, '');
             }
         });
         popUpFormName.addEventListener('blur', event => { validateName(event); });
-        popUpFormEmail.addEventListener('blur', event => { validatePhone(event); });
+        popUpFormEmail.addEventListener('blur', event => { validateEmail(event); });
         popUpFormPhone.addEventListener('blur', event => { validatePhone(event); });
     };
 
