@@ -51,6 +51,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
     countTimer('2 march 2021');
 
+    // smooth scrolling
+    const smoothScrolling = anchor => {
+        const blockID = anchor.getAttribute('href');
+
+        document.querySelector(blockID).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    };
+
+    const btnMain = document.querySelector('main>a');
+    btnMain.addEventListener('click', event => {
+        event.preventDefault();
+        smoothScrolling(btnMain);
+    });
+
     // Menu
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
@@ -64,7 +80,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         btnMenu.addEventListener('click', handlerMenu);
         closeBtn.addEventListener('click', handlerMenu);
-        menuItems.forEach(item => item.addEventListener('click', handlerMenu));
+        menuItems.forEach(item => item.addEventListener('click', event => {
+            event.preventDefault();
+            handlerMenu();
+            smoothScrolling(item.querySelector('a'));
+        }));
     };
 
     toggleMenu();
