@@ -269,6 +269,33 @@ window.addEventListener('DOMContentLoaded', () => {
             popUpFormEmail = document.getElementById('form3-email'),
             popUpFormPhone = document.getElementById('form3-phone');
 
+        const validatePhone = event => {
+            const target = event.target;
+            target.value = target.value.replace(/^[^0-9+]*/g, '')
+                .replace(/\D*$/g, '')
+                .replace(/^\++/g, '+');
+            if (target.value && target.value.search(/^(\+7|8)\d{10}$/) === -1) {
+                alert('Некорректный номер телефона');
+            }
+        };
+        const validateName = event => {
+            const target = event.target;
+            target.value = target.value.trim()
+                .replace(/ +/g, ' ')
+                .split(' ')
+                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        };
+        const validateEmail = event => {
+            const target = event.target;
+            target.value = target.value.toLowerCase()
+                .replace(/^-*/g, '')
+                .replace(/\W*$/g, '');
+            if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
+                alert('Некорректный email');
+            }
+        };
+
         calcBlock.addEventListener('input', event => {
             const target = event.target;
             if (target.matches('.calc-square') ||
@@ -281,86 +308,32 @@ window.addEventListener('DOMContentLoaded', () => {
         mainForm.addEventListener('input', event => {
             const target = event.target;
             if (target.matches('#form1-name')) {
-                target.value = target.value.replace(/[^а-яё\- ]/gi, '');
+                target.value = target.value.replace(/[^а-яё ]/gi, '');
             } else if (target.matches('#form1-email')) {
                 target.value = target.value.replace(/[^a-z@_!~'-.*]/gi, '');
             } else if (target.matches('#form1-phone')) {
-                target.value = target.value.replace(/[^0-9()-]/gi, '');
+                target.value = target.value.replace(/[^0-9+]/gi, '');
             }
         });
-        mainFormName.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.trim()
-                .replace(/^-*/g, '')
-                .replace(/-*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/ +/g, ' ')
-                .split(' ')
-                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-        });
-        mainFormEmail.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.toLowerCase()
-                .replace(/^-*/g, '')
-                .replace(/\W*$/g, '');
-            if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
-                alert('Некорректный email');
-            }
-        });
-        mainFormPhone.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.replace(/^\D*/g, '')
-                .replace(/\D*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/\(+/g, '(')
-                .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
-                alert('Некорректный номер телефона');
-            }
-        });
+        mainFormName.addEventListener('blur', event => { validateName(event); });
+        mainFormEmail.addEventListener('blur', event => { validateEmail(event); });
+        mainFormPhone.addEventListener('blur', event => { validatePhone(event); });
 
         connectForm.addEventListener('input', event => {
             const target = event.target;
-            if (target.matches('#form2-name') || target.matches('#form2-message')) {
-                target.value = target.value.replace(/[^а-яё\- ]/gi, '');
+            if (target.matches('#form2-name')) {
+                target.value = target.value.replace(/[^а-яё ]/gi, '');
+            } else if (target.matches('#form2-message')) {
+                target.value = target.value.replace(/[^а-яё0-9.,\-!?:;'`"()@ ]/gi, '');
             } else if (target.matches('#form2-email')) {
                 target.value = target.value.replace(/[^a-z@_!~'\-.*]/gi, '');
             } else if (target.matches('#form2-phone')) {
-                target.value = target.value.replace(/[^0-9()-]/gi, '');
+                target.value = target.value.replace(/[^0-9+]/gi, '');
             }
         });
-        connectFormName.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.trim()
-                .replace(/^-*/g, '')
-                .replace(/-*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/ +/g, ' ')
-                .split(' ')
-                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-        });
-        connectFormEmail.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.toLowerCase()
-                .replace(/^-*/g, '')
-                .replace(/\W*$/g, '');
-            if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
-                alert('Некорректный email');
-            }
-        });
-        connectFormPhone.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.replace(/^\D*/g, '')
-                .replace(/\D*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/\(+/g, '(')
-                .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
-                alert('Некорректный номер телефона');
-            }
-        });
+        connectFormName.addEventListener('blur', event => { validateName(event); });
+        connectFormEmail.addEventListener('blur', event => { validatePhone(event); });
+        connectFormPhone.addEventListener('blur', event => { validatePhone(event); });
         connectFormMessage.addEventListener('blur', event => {
             const target = event.target;
             target.value = target.value.trim()
@@ -372,46 +345,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
         popUpForm.addEventListener('input', event => {
             const target = event.target;
-            if (target.matches('#form3-name')) {
-                target.value = target.value.replace(/[^а-яё\- ]/gi, '');
-            } else if (target.matches('#form3-email')) {
-                target.value = target.value.replace(/[^a-z@_!~'\-.*]/gi, '');
-            } else if (target.matches('#form3-phone')) {
-                target.value = target.value.replace(/[^0-9()-]/gi, '');
+            if (target.matches('#form1-name')) {
+                target.value = target.value.replace(/[^а-яё ]/gi, '');
+            } else if (target.matches('#form1-email')) {
+                target.value = target.value.replace(/[^a-z@_!~'-.*]/gi, '');
+            } else if (target.matches('#form1-phone')) {
+                target.value = target.value.replace(/[^0-9+]/gi, '');
             }
         });
-        popUpFormName.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.trim()
-                .replace(/^-*/g, '')
-                .replace(/-*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/ +/g, ' ')
-                .split(' ')
-                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-        });
-        popUpFormEmail.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.toLowerCase()
-                .replace(/^-*/g, '')
-                .replace(/\W*$/g, '');
-            if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
-                alert('Некорректный email');
-            }
-        });
-        popUpFormPhone.addEventListener('blur', event => {
-            const target = event.target;
-            target.value = target.value.replace(/^\D*/g, '')
-                .replace(/\D*$/g, '')
-                .replace(/-+/g, '-')
-                .replace(/\(+/g, '(')
-                .replace(/\)+/g, ')');
-            if (target.value && target.value.search(/[78](([()-]*\d){10}|\d{10,11})/) === -1) {
-                alert('Некорректный номер телефона');
-            }
-        });
-
+        popUpFormName.addEventListener('blur', event => { validateName(event); });
+        popUpFormEmail.addEventListener('blur', event => { validatePhone(event); });
+        popUpFormPhone.addEventListener('blur', event => { validatePhone(event); });
     };
 
     validation();
@@ -458,4 +402,67 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     calc(100);
+
+    // send-ajax-form
+    const sendForm = () => {
+        const errorMessage = 'Что-то пошло не так...',
+            loadMessage = 'Загрузка...',
+            successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+
+        const form1 = document.getElementById('form1'),
+            form2 = document.getElementById('form2'),
+            form3 = document.getElementById('form3'),
+            statusMessage = document.createElement('div');
+
+        statusMessage.classList.add('status-message');
+
+        const postData = (body, outputData, errorData) => {
+            const request = new XMLHttpRequest();
+
+            request.addEventListener('readystatechange', () => {
+                if (request.readyState !== 4) {
+                    return;
+                }
+
+                if (request.status === 200) {
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'multipart/form-data');
+            request.send(JSON.stringify(body));
+        };
+
+        const prepareData = (event, form) => {
+            event.preventDefault();
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+
+            const body = {},
+                formData = new FormData(form);
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+                form.querySelectorAll('input').forEach(item => {
+                    item.value = '';
+                });
+            }, error => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            });
+        };
+
+        form1.addEventListener('submit', event => { prepareData(event, form1); });
+        form2.addEventListener('submit', event => { prepareData(event, form2); });
+        form3.addEventListener('submit', event => { prepareData(event, form3); });
+    };
+
+    sendForm();
 });

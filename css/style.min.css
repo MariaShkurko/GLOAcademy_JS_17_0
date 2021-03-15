@@ -738,6 +738,12 @@ footer .web {
 .thanks-block a {
   color: #fff;
 }
+.status-message {
+  font-size: 2rem;
+}
+.popup-content .status-message {
+  color: #fff;
+}
 @media (max-width: 991px) {
   body {
     font-size: 1.5rem;
