@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     };
 
-    countTimer('15 march 2021');
+    countTimer('19 march 2021');
 
     // Menu
     const toggleMenu = () => {
@@ -253,6 +253,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Validation
+    const errorValidate = new Set();
+
     const validation = () => {
         const calcBlock = document.querySelector('.calc-block'),
             mainForm = document.getElementById('form1'),
@@ -270,25 +272,23 @@ window.addEventListener('DOMContentLoaded', () => {
             popUpFormPhone = document.getElementById('form3-phone');
 
         const validatePhone = event => {
-            const target = event.target,
-                btn = document.getElementById(target.id.split('-')[0]).querySelector('button');
+            const target = event.target;
             target.value = target.value.replace(/^[^0-9+]*/g, '')
                 .replace(/\D*$/g, '')
                 .replace(/^\++/g, '+');
             if (!target.value.length) {
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else if ((target.value.length > 6 || target.value.length < 13) &&
                 target.value.search(/^(\+7|8)\d{5,10}$/) === -1) {
                 target.style.border = '2px solid red';
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else {
                 target.style.border = '';
-                btn.disabled = false;
+                errorValidate.delete(target.id);
             }
         };
         const validateName = event => {
-            const target = event.target,
-                btn = document.getElementById(target.id.split('-')[0]).querySelector('button');
+            const target = event.target;
             target.value = target.value.trim()
                 .replace(/ +/g, ' ')
                 .split(' ')
@@ -296,28 +296,27 @@ window.addEventListener('DOMContentLoaded', () => {
                 .join(' ');
             if (target.value.length < 2) {
                 target.style.border = '2px solid red';
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else if (!target.value) {
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else {
                 target.style.border = '';
-                btn.disabled = false;
+                errorValidate.delete(target.id);
             }
         };
         const validateEmail = event => {
-            const target = event.target,
-                btn = document.getElementById(target.id.split('-')[0]).querySelector('button');
+            const target = event.target;
             target.value = target.value.toLowerCase()
                 .replace(/^-*/g, '')
                 .replace(/\W*$/g, '');
             if (target.value && target.value.search(/\w+@\w+\.\w{2,3}/) === -1) {
                 target.style.border = '2px solid red';
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else if (!target.value) {
-                btn.disabled = true;
+                errorValidate.add(target.id);
             } else {
                 target.style.border = '';
-                btn.disabled = false;
+                errorValidate.delete(target.id);
             }
         };
 
@@ -357,7 +356,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
         connectFormName.addEventListener('blur', event => { validateName(event); });
-        connectFormEmail.addEventListener('blur', event => { validatePhone(event); });
+        connectFormEmail.addEventListener('blur', event => { validateEmail(event); });
         connectFormPhone.addEventListener('blur', event => { validatePhone(event); });
         connectFormMessage.addEventListener('blur', event => {
             const target = event.target;
@@ -432,7 +431,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так...',
             loadMessage = 'Загрузка...',
-            successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+            successMessage = 'Спасибо! Мы скоро с вами свяжемся!',
+            incorrectDataMessage = 'Введены некоректные данные';
 
         const form1 = document.getElementById('form1'),
             form2 = document.getElementById('form2'),
@@ -463,7 +463,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const prepareData = (event, form) => {
             event.preventDefault();
+            console.log(errorValidate.size);
             form.appendChild(statusMessage);
+
+            if (errorValidate.size) {
+                statusMessage.textContent = incorrectDataMessage;
+                return;
+            }
+
             statusMessage.textContent = loadMessage;
 
             const body = {},
