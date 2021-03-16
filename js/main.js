@@ -441,7 +441,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         statusMessage.classList.add('status-message');
 
-        const postData = (body, outputData, errorData) => {
+        const postData = body => new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
 
             request.addEventListener('readystatechange', () => {
@@ -450,20 +450,19 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (request.status === 200) {
-                    outputData();
+                    resolve();
                 } else {
-                    errorData(request.status);
+                    reject(request.status);
                 }
             });
 
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'multipart/form-data');
             request.send(JSON.stringify(body));
-        };
+        });
 
         const prepareData = (event, form) => {
             event.preventDefault();
-            console.log(errorValidate.size);
             form.appendChild(statusMessage);
 
             if (errorValidate.size) {
@@ -480,15 +479,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 body[key] = val;
             });
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-                form.querySelectorAll('input').forEach(item => {
-                    item.value = '';
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = successMessage;
+                    form.querySelectorAll('input').forEach(item => {
+                        item.value = '';
+                    });
+                })
+                .catch(error => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
                 });
-            }, error => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
         };
 
         form1.addEventListener('submit', event => { prepareData(event, form1); });
