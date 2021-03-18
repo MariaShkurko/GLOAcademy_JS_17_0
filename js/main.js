@@ -469,6 +469,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            statusMessage.textContent = '';
             statusMessage.insertAdjacentElement('afterbegin', loadSpin);
 
             const body = {},
