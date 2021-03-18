@@ -441,24 +441,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
         statusMessage.classList.add('status-message');
 
-        const postData = body => new Promise((resolve, reject) => {
-            const request = new XMLHttpRequest();
-
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    resolve();
-                } else {
-                    reject(request.status);
-                }
-            });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'multipart/form-data');
-            request.send(JSON.stringify(body));
+        const postData = body => fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
         });
 
         const prepareData = (event, form) => {
@@ -480,7 +468,10 @@ window.addEventListener('DOMContentLoaded', () => {
             });
 
             postData(body)
-                .then(() => {
+                .then(responce => {
+                    if (responce.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
                     statusMessage.textContent = successMessage;
                     form.querySelectorAll('input').forEach(item => {
                         item.value = '';
