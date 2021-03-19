@@ -94,7 +94,7 @@ const validation = () => {
         if (target.matches('#form2-name')) {
             target.value = target.value.replace(/[^а-яё ]/gi, '');
         } else if (target.matches('#form2-message')) {
-            target.value = target.value.replace(/[^а-яё0-9.,\-!?:;'`"()@ ]/gi, '');
+            target.value = target.value.replace(/[^а-яё0-9.,\-!?:;'`"@ ]/gi, '');
         } else if (target.matches('#form2-email')) {
             target.value = target.value.replace(/[^a-z@_!~'\-.*]/gi, '');
         } else if (target.matches('#form2-phone')) {
