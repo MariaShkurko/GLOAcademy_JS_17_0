@@ -166,7 +166,7 @@ class AppData {
     }
 
     getAddExpInc(addItem) {
-        const condition = addItem.className.split('-')[0] === 'additional_expenses';
+        const condition = addItem.className && addItem.className.split('-')[0] === 'additional_expenses';
         let add;
 
         if (condition) {
@@ -178,7 +178,11 @@ class AppData {
         add.forEach((item) => {
             const itemValue = condition ? item.trim() : item.value.trim();
             if (itemValue !== '') {
-                this[condition ? addExpenses : addIncome].push(itemValue);
+                if (condition) {
+                    this.addExpenses.push(itemValue);
+                } else {
+                    this.addIncome.push(itemValue);
+                }
             }
         });
     }
